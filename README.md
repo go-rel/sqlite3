@@ -8,7 +8,7 @@
 
 SQLite3 adapter for REL.
 
-## Example 
+## Example
 
 ```go
 package main
@@ -34,3 +34,7 @@ func main() {
 	repo.Ping(context.TODO())
 }
 ```
+
+## Supported Driver
+
+- github.com/mattn/go-sqlite3

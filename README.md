@@ -3,7 +3,7 @@
 [![GoDoc](https://godoc.org/github.com/go-rel/sqlite3?status.svg)](https://pkg.go.dev/github.com/go-rel/sqlite3)
 [![Tesst](https://github.com/go-rel/sqlite3/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/go-rel/sqlite3/actions/workflows/test.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-rel/sqlite3)](https://goreportcard.com/report/github.com/go-rel/sqlite3)
-[![codecov](https://codecov.io/gh/go-rel/sqlite3/branch/main/graph/badge.svg?token=3VBLHCCG4N)](https://codecov.io/gh/go-rel/sqlite3)
+[![codecov](https://codecov.io/gh/go-rel/sqlite3/branch/main/graph/badge.svg?token=GX2dOCV7Cq)](https://codecov.io/gh/go-rel/sqlite3)
 [![Gitter chat](https://badges.gitter.im/go-rel/rel.png)](https://gitter.im/go-rel/rel)
 
 SQLite3 adapter for REL.
@@ -33,5 +33,4 @@ func main() {
 	repo := rel.New(adapter)
 	repo.Ping(context.TODO())
 }
-
 ```

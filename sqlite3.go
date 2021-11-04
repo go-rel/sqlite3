@@ -107,9 +107,9 @@ func columnMapper(column *rel.Column) (string, int, int) {
 
 	switch column.Type {
 	case rel.ID:
-		typ = "INTEGER PRIMARY KEY"
+		typ = "INTEGER"
 	case rel.BigID:
-		typ = "BIGINT PRIMARY KEY"
+		typ = "BIGINT"
 	case rel.Int:
 		typ = "INTEGER"
 		m = column.Limit

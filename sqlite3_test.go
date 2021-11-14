@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/go-rel/rel"
-	"github.com/go-rel/rel/adapter/specs"
+	"github.com/go-rel/sql/specs"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
 )
@@ -29,11 +29,11 @@ func TestAdapter_specs(t *testing.T) {
 	repo := rel.New(adapter)
 
 	// Prepare tables
-	teardown := specs.Setup(t, repo)
+	teardown := specs.Setup(repo)
 	defer teardown()
 
 	// Migration Specs
-	specs.Migrate(t, repo, specs.SkipDropColumn)
+	specs.Migrate(specs.SkipDropColumn)
 
 	// Query Specs
 	specs.Query(t, repo)

@@ -8,6 +8,10 @@ github.com/go-rel/rel v0.32.1-0.20220312033944-1afddb520d93 h1:Bqj+8QTeAfHOrCMUU
 github.com/go-rel/rel v0.32.1-0.20220312033944-1afddb520d93/go.mod h1:DhB9Xmt/ymaumJAB6Z3Kq+IybLwQhhrzr6ZLeXMygPo=
 github.com/go-rel/sql v0.8.1-0.20220312080648-77281ca6c0f2 h1:g6PaXs+kBVxnh2EptmGj/HyynLY9AgA5GPFxkS70XSw=
 github.com/go-rel/sql v0.8.1-0.20220312080648-77281ca6c0f2/go.mod h1:u7tYWeR7tpifhb6zQ42l07MsZusrhF64q3v+yUDhBb8=
+github.com/go-rel/sql v0.8.1-0.20220312090959-765b2c0aa060 h1:U2F0QrUXjAZ2gTSo2RTcnc9127ubYmsdFIFFZtJpjIY=
+github.com/go-rel/sql v0.8.1-0.20220312090959-765b2c0aa060/go.mod h1:u7tYWeR7tpifhb6zQ42l07MsZusrhF64q3v+yUDhBb8=
+github.com/go-rel/sql v0.8.1-0.20220312092621-323201315aca h1:e/NxVH5LGKn+fU1BHihxH2I40v6L3Im5giWtY3LLswk=
+github.com/go-rel/sql v0.8.1-0.20220312092621-323201315aca/go.mod h1:u7tYWeR7tpifhb6zQ42l07MsZusrhF64q3v+yUDhBb8=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.4.0-rc.1/go.mod h1:ceaxUfeHdC40wWswd/P6IGgMaK3YpKi5j83Wpe3EHw8=
 github.com/golang/protobuf v1.4.0-rc.1.0.20200221234624-67d41d38c208/go.mod h1:xKAWHe0F5eneWXFV3EuXVDTCmh+JuBKY0li0aMyXATA=

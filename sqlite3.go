@@ -27,7 +27,7 @@ func New(database *db.DB) rel.Adapter {
 		bufferFactory     = builder.BufferFactory{ArgumentPlaceholder: "?", BoolTrueValue: "1", BoolFalseValue: "0", Quoter: builder.Quote{IDPrefix: "\"", IDSuffix: "\"", IDSuffixEscapeChar: "\"", ValueQuote: "'", ValueQuoteEscapeChar: "'"}}
 		filterBuilder     = builder.Filter{}
 		queryBuilder      = builder.Query{BufferFactory: bufferFactory, Filter: filterBuilder}
-		OnConflictBuilder = builder.OnConflict{Statement: "ON CONFLICT", IgnoreStatement: "DO NOTHING", UpdateStatement: "DO UPDATE SET", TableQualifier: "EXCLUDED", SupportKey: true}
+		OnConflictBuilder = builder.OnConflict{Statement: "ON CONFLICT", IgnoreStatement: "DO NOTHING", UpdateStatement: "DO UPDATE SET", TableQualifier: "excluded", SupportKey: true}
 		InsertBuilder     = builder.Insert{BufferFactory: bufferFactory, InsertDefaultValues: true, OnConflict: OnConflictBuilder}
 		insertAllBuilder  = builder.InsertAll{BufferFactory: bufferFactory, OnConflict: OnConflictBuilder}
 		updateBuilder     = builder.Update{BufferFactory: bufferFactory, Query: queryBuilder, Filter: filterBuilder}

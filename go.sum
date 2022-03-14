@@ -7,8 +7,9 @@ github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4
 github.com/go-rel/migration v0.0.0-20220312094639-c4f3bb04e14a/go.mod h1:fDYiCl9hywz1I5lUF3FmF20eTKuCn1q3nrRIsAtx7nc=
 github.com/go-rel/rel v0.32.1-0.20220312033944-1afddb520d93/go.mod h1:DhB9Xmt/ymaumJAB6Z3Kq+IybLwQhhrzr6ZLeXMygPo=
 github.com/go-rel/rel v0.32.1-0.20220312054643-01a18742cb55/go.mod h1:DhB9Xmt/ymaumJAB6Z3Kq+IybLwQhhrzr6ZLeXMygPo=
-github.com/go-rel/rel v0.33.0 h1:hPC3WGdRYjiEaZLhrwQzkd/kwsal1Z9FzZD9Wz0wJiM=
 github.com/go-rel/rel v0.33.0/go.mod h1:x8s+3nWG8wMi7ZD0QyhUk6kEQkt34qV/ZVdkftemhGI=
+github.com/go-rel/rel v0.33.1 h1:yi3u6FDsQnOKZjo/DxEAC1WOLEjoas3fE1+Vyh6m6uY=
+github.com/go-rel/rel v0.33.1/go.mod h1:DhB9Xmt/ymaumJAB6Z3Kq+IybLwQhhrzr6ZLeXMygPo=
 github.com/go-rel/reltest v0.7.1-0.20220312094335-ff56a837dea0/go.mod h1:UND4kTUh3KpSGah0d71AuaOAaIcWKnFOelrtgDIQB/k=
 github.com/go-rel/sql v0.8.1-0.20220312080648-77281ca6c0f2/go.mod h1:u7tYWeR7tpifhb6zQ42l07MsZusrhF64q3v+yUDhBb8=
 github.com/go-rel/sql v0.8.1-0.20220312090959-765b2c0aa060/go.mod h1:u7tYWeR7tpifhb6zQ42l07MsZusrhF64q3v+yUDhBb8=

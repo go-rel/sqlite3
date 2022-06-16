@@ -17,7 +17,7 @@ import (
 	"context"
 
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/go-rel/mssql"
+	"github.com/go-rel/sqlite3"
 	"github.com/go-rel/rel"
 )
 

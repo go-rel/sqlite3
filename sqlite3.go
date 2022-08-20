@@ -46,7 +46,7 @@ func New(database *db.DB) rel.Adapter {
 		DeleteBuilder:    deleteBuilder,
 		TableBuilder:     tableBuilder,
 		IndexBuilder:     indexBuilder,
-		IncrementFunc:    incrementFunc,
+		Increment:        -1,
 		ErrorMapper:      errorMapper,
 		DB:               database,
 	}
@@ -56,11 +56,6 @@ func New(database *db.DB) rel.Adapter {
 func Open(dsn string) (rel.Adapter, error) {
 	var database, err = db.Open("sqlite3", dsn)
 	return New(database), err
-}
-
-func incrementFunc(adapter sql.SQL) int {
-	// decrement
-	return -1
 }
 
 func errorMapper(err error) error {

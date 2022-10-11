@@ -14,6 +14,7 @@ package sqlite3
 
 import (
 	db "database/sql"
+	"log"
 	"strings"
 
 	"github.com/go-rel/rel"
@@ -34,7 +35,7 @@ func New(database *db.DB) rel.Adapter {
 		deleteBuilder     = builder.Delete{BufferFactory: bufferFactory, Query: queryBuilder, Filter: filterBuilder}
 		ddlBufferFactory  = builder.BufferFactory{InlineValues: true, BoolTrueValue: "1", BoolFalseValue: "0", Quoter: builder.Quote{IDPrefix: "\"", IDSuffix: "\"", IDSuffixEscapeChar: "\"", ValueQuote: "'", ValueQuoteEscapeChar: "'"}}
 		ddlQueryBuilder   = builder.Query{BufferFactory: ddlBufferFactory, Filter: filterBuilder}
-		tableBuilder      = builder.Table{BufferFactory: ddlBufferFactory, ColumnMapper: columnMapper}
+		tableBuilder      = builder.Table{BufferFactory: ddlBufferFactory, ColumnMapper: columnMapper, DefinitionFilter: definitionFilter}
 		indexBuilder      = builder.Index{BufferFactory: ddlBufferFactory, Query: ddlQueryBuilder, Filter: filterBuilder, SupportFilter: true}
 	)
 
@@ -118,4 +119,17 @@ func columnMapper(column *rel.Column) (string, int, int) {
 	}
 
 	return typ, m, n
+}
+
+func definitionFilter(table rel.Table, def rel.TableDefinition) bool {
+	_, ok := def.(rel.Key)
+	// https://www.sqlite.org/omitted.html
+	// > Only the RENAME TABLE, ADD COLUMN, RENAME COLUMN, and DROP COLUMN variants of the ALTER TABLE command are supported.
+	if ok && table.Op == rel.SchemaAlter {
+		log.Print("[REL] SQLite3 adapter does not support adding keys when modifying tables")
+
+		return false
+	}
+
+	return true
 }

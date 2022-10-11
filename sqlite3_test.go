@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/go-rel/rel"
+	"github.com/go-rel/rel/migrator"
 	"github.com/go-rel/sql/specs"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
@@ -122,4 +123,44 @@ func TestAdapter_Exec_error(t *testing.T) {
 
 	_, _, err = adapter.Exec(ctx, "error", nil)
 	assert.NotNil(t, err)
+}
+
+func TestAdapter_Migration_SkipUnsupportedTableDefinition(t *testing.T) {
+	adapter, err := Open(dsn())
+	assert.Nil(t, err)
+	defer adapter.Close()
+
+	repo := rel.New(adapter)
+	m := migrator.New(repo)
+
+	m.Register(1,
+		func(schema *rel.Schema) {
+			schema.CreateTable("users", func(t *rel.Table) {
+				t.ID("id")
+				t.String("name", rel.Limit(30), rel.Default(""))
+			})
+			schema.CreateTable("addresses", func(t *rel.Table) {
+				t.ID("id")
+				t.Int("user_id", rel.Unsigned(true))
+			})
+		},
+		func(schema *rel.Schema) {
+			schema.DropTable("addresses")
+			schema.DropTable("users")
+		},
+	)
+	defer m.Rollback(ctx)
+
+	m.Register(2,
+		func(schema *rel.Schema) {
+			schema.AlterTable("addresses", func(t *rel.AlterTable) {
+				t.ForeignKey("user_id", "users", "id")
+			})
+		},
+		func(schema *rel.Schema) {
+		},
+	)
+	defer m.Rollback(ctx)
+
+	m.Migrate(ctx)
 }

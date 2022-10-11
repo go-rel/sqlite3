@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/go-rel/rel"
-	"github.com/go-rel/rel/migrator"
+	"github.com/go-rel/sql"
 	"github.com/go-rel/sql/specs"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
@@ -125,42 +125,36 @@ func TestAdapter_Exec_error(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
-func TestAdapter_Migration_SkipUnsupportedTableDefinition(t *testing.T) {
+func TestAdapter_TableBuilder(t *testing.T) {
 	adapter, err := Open(dsn())
 	assert.Nil(t, err)
 	defer adapter.Close()
 
-	repo := rel.New(adapter)
-	m := migrator.New(repo)
+	tests := []struct {
+		result string
+		table  rel.Table
+	}{
+		{
+			result: `ALTER TABLE "columns" ADD COLUMN "verified" BOOL;ALTER TABLE "columns" RENAME COLUMN "string" TO "name";ALTER TABLE "columns" ;ALTER TABLE "columns" DROP COLUMN "blob";`,
+			table: rel.Table{
+				Op:   rel.SchemaAlter,
+				Name: "columns",
+				Definitions: []rel.TableDefinition{
+					rel.Column{Name: "verified", Type: rel.Bool, Op: rel.SchemaCreate},
+					rel.Column{Name: "string", Rename: "name", Op: rel.SchemaRename},
+					rel.Column{Name: "bool", Type: rel.Int, Op: rel.SchemaAlter},
+					rel.Column{Name: "blob", Op: rel.SchemaDrop},
 
-	m.Register(1,
-		func(schema *rel.Schema) {
-			schema.CreateTable("users", func(t *rel.Table) {
-				t.ID("id")
-				t.String("name", rel.Limit(30), rel.Default(""))
-			})
-			schema.CreateTable("addresses", func(t *rel.Table) {
-				t.ID("id")
-				t.Int("user_id", rel.Unsigned(true))
-			})
+					// unsupported and will be skipped
+					rel.Key{Op: rel.SchemaCreate, Columns: []string{"user_id"}, Type: rel.ForeignKey, Reference: rel.ForeignKeyReference{Table: "products", Columns: []string{"id", "name"}}},
+				},
+			},
 		},
-		func(schema *rel.Schema) {
-			schema.DropTable("addresses")
-			schema.DropTable("users")
-		},
-	)
-	defer m.Rollback(ctx)
+	}
 
-	m.Register(2,
-		func(schema *rel.Schema) {
-			schema.AlterTable("addresses", func(t *rel.AlterTable) {
-				t.ForeignKey("user_id", "users", "id")
-			})
-		},
-		func(schema *rel.Schema) {
-		},
-	)
-	defer m.Rollback(ctx)
-
-	m.Migrate(ctx)
+	for _, test := range tests {
+		t.Run(test.result, func(t *testing.T) {
+			assert.Equal(t, test.result, adapter.(*sql.SQL).TableBuilder.Build(test.table))
+		})
+	}
 }

@@ -150,6 +150,14 @@ func TestAdapter_TableBuilder(t *testing.T) {
 				},
 			},
 		},
+		{
+			result: `ALTER TABLE "table" RENAME TO "table1";`,
+			table: rel.Table{
+				Op:     rel.SchemaRename,
+				Name:   "table",
+				Rename: "table1",
+			},
+		},
 	}
 
 	for _, test := range tests {

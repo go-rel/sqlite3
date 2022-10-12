@@ -122,13 +122,15 @@ func columnMapper(column *rel.Column) (string, int, int) {
 }
 
 func definitionFilter(table rel.Table, def rel.TableDefinition) bool {
-	_, ok := def.(rel.Key)
-	// https://www.sqlite.org/omitted.html
-	// > Only the RENAME TABLE, ADD COLUMN, RENAME COLUMN, and DROP COLUMN variants of the ALTER TABLE command are supported.
-	if ok && table.Op == rel.SchemaAlter {
-		log.Print("[REL] SQLite3 adapter does not support adding keys when modifying tables")
+	if table.Op == rel.SchemaAlter {
+		// https://www.sqlite.org/omitted.html
+		// > Only the RENAME TABLE, ADD COLUMN, RENAME COLUMN, and DROP COLUMN variants of the ALTER TABLE command are supported.
+		_, ok := def.(rel.Key)
+		if ok {
+			log.Print("[REL] SQLite3 adapter does not support adding keys when modifying tables")
 
-		return false
+			return false
+		}
 	}
 
 	return true

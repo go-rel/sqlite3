@@ -6,7 +6,7 @@ require (
 	github.com/go-rel/rel v0.39.0
 	github.com/go-rel/sql v0.13.1
 	github.com/mattn/go-sqlite3 v1.14.17
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 )
 
 require (

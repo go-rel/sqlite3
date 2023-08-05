@@ -12,7 +12,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        go: [1.15, 1.16, 1.17, 1.18, 1.19]
+        go: [1.17, 1.18, 1.19, '1.20']
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.x
@@ -25,7 +25,7 @@ jobs:
       run: go test -race ./...
     - name: Coverage
       run: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
-      if: matrix.go == 1.19 && matrix.os == 'ubuntu-latest'
+      if: matrix.go == 1.20 && matrix.os == 'ubuntu-latest'
     - name: Codecov
       uses: codecov/codecov-action@v1
-      if: matrix.go == 1.19 && matrix.os == 'ubuntu-latest'
+      if: matrix.go == 1.20 && matrix.os == 'ubuntu-latest'

@@ -1,10 +1,12 @@
 module github.com/go-rel/sqlite3
 
-go 1.20
+go 1.21
+
+toolchain go1.21.0
 
 require (
-	github.com/go-rel/rel v0.39.0
-	github.com/go-rel/sql v0.14.0
+	github.com/go-rel/rel v0.40.0
+	github.com/go-rel/sql v0.15.1-0.20230926233117-4af81443c5e1
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/stretchr/testify v1.8.4
 )

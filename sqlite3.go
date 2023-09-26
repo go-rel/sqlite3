@@ -36,7 +36,7 @@ func New(database *db.DB) rel.Adapter {
 		deleteBuilder     = builder.Delete{BufferFactory: bufferFactory, Query: queryBuilder, Filter: filterBuilder}
 		ddlBufferFactory  = builder.BufferFactory{InlineValues: true, BoolTrueValue: "1", BoolFalseValue: "0", Quoter: builder.Quote{IDPrefix: "\"", IDSuffix: "\"", IDSuffixEscapeChar: "\"", ValueQuote: "'", ValueQuoteEscapeChar: "'"}}
 		ddlQueryBuilder   = builder.Query{BufferFactory: ddlBufferFactory, Filter: filterBuilder}
-		tableBuilder      = builder.Table{BufferFactory: ddlBufferFactory, ColumnMapper: columnMapper, DefinitionFilter: definitionFilter, DropKeyMapper: sql.DropKeyMapper}
+		tableBuilder      = builder.Table{BufferFactory: ddlBufferFactory, ColumnMapper: columnMapper, ColumnOptionsMapper: columnOptionsMapper, DefinitionFilter: definitionFilter, DropKeyMapper: sql.DropKeyMapper}
 		indexBuilder      = builder.Index{BufferFactory: ddlBufferFactory, Query: ddlQueryBuilder, Filter: filterBuilder, SupportFilter: true}
 	)
 
@@ -56,7 +56,7 @@ func New(database *db.DB) rel.Adapter {
 
 // Open sqlite3 connection using dsn.
 func Open(dsn string) (rel.Adapter, error) {
-	var database, err = db.Open("sqlite3", dsn)
+	database, err := db.Open("sqlite3", dsn)
 	return New(database), err
 }
 
@@ -96,18 +96,15 @@ func errorMapper(err error) error {
 
 func columnMapper(column *rel.Column) (string, int, int) {
 	var (
-		typ      string
-		m, n     int
-		unsigned = column.Unsigned
+		typ  string
+		m, n int
 	)
-
-	column.Unsigned = false
 
 	switch column.Type {
 	case rel.ID:
-		typ = "INTEGER"
+		return "INTEGER", 0, 0
 	case rel.BigID:
-		typ = "BIGINT"
+		return "INTEGER", 0, 0
 	case rel.Int:
 		typ = "INTEGER"
 		m = column.Limit
@@ -115,11 +112,37 @@ func columnMapper(column *rel.Column) (string, int, int) {
 		typ, m, n = sql.ColumnMapper(column)
 	}
 
-	if unsigned {
+	if column.Unsigned {
 		typ = "UNSIGNED " + typ
 	}
 
 	return typ, m, n
+}
+
+func columnOptionsMapper(column *rel.Column) string {
+	var buffer strings.Builder
+
+	if column.Primary {
+		buffer.WriteString(" PRIMARY KEY")
+		if column.Type == rel.ID || column.Type == rel.BigID {
+			buffer.WriteString(" AUTOINCREMENT")
+		}
+	}
+
+	if column.Required {
+		buffer.WriteString(" NOT NULL")
+	}
+
+	if column.Unique {
+		buffer.WriteString(" UNIQUE")
+	}
+
+	buf := buffer.String()
+	if buf != "" {
+		buf = buf[1:]
+	}
+
+	return buf
 }
 
 func definitionFilter(table rel.Table, def rel.TableDefinition) bool {

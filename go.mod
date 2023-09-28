@@ -6,7 +6,7 @@ toolchain go1.21.0
 
 require (
 	github.com/go-rel/rel v0.40.0
-	github.com/go-rel/sql v0.15.1-0.20230927020931-5b67559d2fe1
+	github.com/go-rel/sql v0.15.1-0.20230928064323-59ff908dea33
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/stretchr/testify v1.8.4
 )
@@ -20,5 +20,3 @@ require (
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/go-rel/sql v0.15.1-0.20230926233117-4af81443c5e1 => ../sql/

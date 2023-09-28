@@ -4,8 +4,8 @@ github.com/fsnotify/fsnotify v1.6.0 h1:n+5WquG0fcWoWp6xPWfHdbskMCQaFnG6PfBrh1Ky4
 github.com/fsnotify/fsnotify v1.6.0/go.mod h1:sl3t1tCWJFWoRz9R8WJCbQihKKwmorjAbSClcnxKAGw=
 github.com/go-rel/rel v0.40.0 h1:Av2/Ub6fQn6UbwxTIHStfLb7W+knRhOVX8AWcC+pOBA=
 github.com/go-rel/rel v0.40.0/go.mod h1:6opWRxsoHoDq67fIDnsmcmnojpskWpPqCs0AoL/UrEU=
-github.com/go-rel/sql v0.15.1-0.20230927020931-5b67559d2fe1 h1:K3wgZUbotCQT/a8S9/ZuPOfz77AqHiPNZHRm9DWlVnA=
-github.com/go-rel/sql v0.15.1-0.20230927020931-5b67559d2fe1/go.mod h1:9Jy+N+nTTjlq9QZquoj19tppYuBXMz2grOtTN6HBD3U=
+github.com/go-rel/sql v0.15.1-0.20230928064323-59ff908dea33 h1:4IkO1hj/CCgSQ7Q5OAmfxhNIIs8eay/JDadoG4TE/4Q=
+github.com/go-rel/sql v0.15.1-0.20230928064323-59ff908dea33/go.mod h1:9Jy+N+nTTjlq9QZquoj19tppYuBXMz2grOtTN6HBD3U=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/mattn/go-sqlite3 v1.14.17 h1:mCRHCLDUBXgpKAqIKsaAaAsrAlbkeomtRFKXh2L6YIM=

@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/go-rel/rel"
-	"github.com/go-rel/sql"
 	"github.com/go-rel/sql/specs"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
@@ -20,6 +19,14 @@ func dsn() string {
 	}
 
 	return "./rel_test.db?_foreign_keys=1&_loc=Local"
+}
+
+func TestAdapter_DBType(t *testing.T) {
+	adapter, err := Open(dsn())
+	assert.Nil(t, err)
+	defer adapter.Close()
+
+	assert.Equal(t, Name, adapter.DBType())
 }
 
 func TestAdapter_specs(t *testing.T) {
@@ -162,7 +169,7 @@ func TestAdapter_TableBuilder(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.result, func(t *testing.T) {
-			assert.Equal(t, test.result, adapter.(*sql.SQL).TableBuilder.Build(test.table))
+			assert.Equal(t, test.result, adapter.(*sqlAdapter).TableBuilder.Build(test.table))
 		})
 	}
 }

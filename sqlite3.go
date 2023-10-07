@@ -30,8 +30,8 @@ type sqlAdapter struct {
 // Name of database type this adapter implements.
 const Name string = "sqlite3"
 
-// DBType of database adapter.
-func (sqlAdapter) DBType() string {
+// Name of database adapter.
+func (sqlAdapter) Name() string {
 	return Name
 }
 

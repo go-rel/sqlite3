@@ -21,12 +21,12 @@ func dsn() string {
 	return "./rel_test.db?_foreign_keys=1&_loc=Local"
 }
 
-func TestAdapter_DBType(t *testing.T) {
+func TestAdapter_Name(t *testing.T) {
 	adapter, err := Open(dsn())
 	assert.Nil(t, err)
 	defer adapter.Close()
 
-	assert.Equal(t, Name, adapter.DBType())
+	assert.Equal(t, Name, adapter.Name())
 }
 
 func TestAdapter_specs(t *testing.T) {

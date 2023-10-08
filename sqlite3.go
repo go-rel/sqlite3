@@ -23,17 +23,13 @@ import (
 	"github.com/go-rel/sql/builder"
 )
 
-type sqlAdapter struct {
-	*sql.SQL
+// SQLite3 adapter
+type SQLite3 struct {
+	sql.SQL
 }
 
 // Name of database type this adapter implements.
 const Name string = "sqlite3"
-
-// Name of database adapter.
-func (sqlAdapter) Name() string {
-	return Name
-}
 
 // New sqlite3 adapter using existing connection.
 func New(database *db.DB) rel.Adapter {
@@ -52,8 +48,8 @@ func New(database *db.DB) rel.Adapter {
 		indexBuilder      = builder.Index{BufferFactory: ddlBufferFactory, Query: ddlQueryBuilder, Filter: filterBuilder, SupportFilter: true}
 	)
 
-	return &sqlAdapter{
-		SQL: &sql.SQL{
+	return &SQLite3{
+		SQL: sql.SQL{
 			QueryBuilder:     queryBuilder,
 			InsertBuilder:    InsertBuilder,
 			InsertAllBuilder: insertAllBuilder,
@@ -72,6 +68,11 @@ func New(database *db.DB) rel.Adapter {
 func Open(dsn string) (rel.Adapter, error) {
 	database, err := db.Open("sqlite3", dsn)
 	return New(database), err
+}
+
+// Name of database adapter.
+func (SQLite3) Name() string {
+	return Name
 }
 
 func errorMapper(err error) error {

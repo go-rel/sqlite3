@@ -169,7 +169,7 @@ func TestAdapter_TableBuilder(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.result, func(t *testing.T) {
-			assert.Equal(t, test.result, adapter.(*sqlAdapter).TableBuilder.Build(test.table))
+			assert.Equal(t, test.result, adapter.(*SQLite3).TableBuilder.Build(test.table))
 		})
 	}
 }

@@ -70,6 +70,15 @@ func Open(dsn string) (rel.Adapter, error) {
 	return New(database), err
 }
 
+// MustOpen sqlite3 connection using dsn.
+func MustOpen(dsn string) rel.Adapter {
+	database, err := db.Open("sqlite3", dsn)
+	if err != nil {
+		panic(err)
+	}
+	return New(database)
+}
+
 // Name of database adapter.
 func (SQLite3) Name() string {
 	return Name

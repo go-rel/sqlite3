@@ -23,6 +23,14 @@ import (
 	"github.com/go-rel/sql/builder"
 )
 
+// SQLite3 adapter
+type SQLite3 struct {
+	sql.SQL
+}
+
+// Name of database type this adapter implements.
+const Name string = "sqlite3"
+
 // New sqlite3 adapter using existing connection.
 func New(database *db.DB) rel.Adapter {
 	var (
@@ -40,17 +48,19 @@ func New(database *db.DB) rel.Adapter {
 		indexBuilder      = builder.Index{BufferFactory: ddlBufferFactory, Query: ddlQueryBuilder, Filter: filterBuilder, SupportFilter: true}
 	)
 
-	return &sql.SQL{
-		QueryBuilder:     queryBuilder,
-		InsertBuilder:    InsertBuilder,
-		InsertAllBuilder: insertAllBuilder,
-		UpdateBuilder:    updateBuilder,
-		DeleteBuilder:    deleteBuilder,
-		TableBuilder:     tableBuilder,
-		IndexBuilder:     indexBuilder,
-		Increment:        -1,
-		ErrorMapper:      errorMapper,
-		DB:               database,
+	return &SQLite3{
+		SQL: sql.SQL{
+			QueryBuilder:     queryBuilder,
+			InsertBuilder:    InsertBuilder,
+			InsertAllBuilder: insertAllBuilder,
+			UpdateBuilder:    updateBuilder,
+			DeleteBuilder:    deleteBuilder,
+			TableBuilder:     tableBuilder,
+			IndexBuilder:     indexBuilder,
+			Increment:        -1,
+			ErrorMapper:      errorMapper,
+			DB:               database,
+		},
 	}
 }
 
@@ -58,6 +68,20 @@ func New(database *db.DB) rel.Adapter {
 func Open(dsn string) (rel.Adapter, error) {
 	database, err := db.Open("sqlite3", dsn)
 	return New(database), err
+}
+
+// MustOpen sqlite3 connection using dsn.
+func MustOpen(dsn string) rel.Adapter {
+	database, err := db.Open("sqlite3", dsn)
+	if err != nil {
+		panic(err)
+	}
+	return New(database)
+}
+
+// Name of database adapter.
+func (SQLite3) Name() string {
+	return Name
 }
 
 func errorMapper(err error) error {

@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/go-rel/rel"
-	"github.com/go-rel/sql"
 	"github.com/go-rel/sql/specs"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
@@ -22,9 +21,15 @@ func dsn() string {
 	return "./rel_test.db?_foreign_keys=1&_loc=Local"
 }
 
+func TestAdapter_Name(t *testing.T) {
+	adapter := MustOpen(dsn())
+	defer adapter.Close()
+
+	assert.Equal(t, Name, adapter.Name())
+}
+
 func TestAdapter_specs(t *testing.T) {
-	adapter, err := Open(dsn())
-	assert.Nil(t, err)
+	adapter := MustOpen(dsn())
 	defer adapter.Close()
 
 	repo := rel.New(adapter)
@@ -101,16 +106,14 @@ func TestAdapter_specs(t *testing.T) {
 }
 
 func TestAdapter_Transaction_commitError(t *testing.T) {
-	adapter, err := Open(dsn())
-	assert.Nil(t, err)
+	adapter := MustOpen(dsn())
 	defer adapter.Close()
 
 	assert.NotNil(t, adapter.Commit(ctx))
 }
 
 func TestAdapter_Transaction_rollbackError(t *testing.T) {
-	adapter, err := Open(dsn())
-	assert.Nil(t, err)
+	adapter := MustOpen(dsn())
 	defer adapter.Close()
 
 	assert.NotNil(t, adapter.Rollback(ctx))
@@ -126,8 +129,7 @@ func TestAdapter_Exec_error(t *testing.T) {
 }
 
 func TestAdapter_TableBuilder(t *testing.T) {
-	adapter, err := Open(dsn())
-	assert.Nil(t, err)
+	adapter := MustOpen(dsn())
 	defer adapter.Close()
 
 	tests := []struct {
@@ -162,7 +164,7 @@ func TestAdapter_TableBuilder(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.result, func(t *testing.T) {
-			assert.Equal(t, test.result, adapter.(*sql.SQL).TableBuilder.Build(test.table))
+			assert.Equal(t, test.result, adapter.(*SQLite3).TableBuilder.Build(test.table))
 		})
 	}
 }

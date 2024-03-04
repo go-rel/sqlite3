@@ -5,10 +5,10 @@ go 1.21
 toolchain go1.21.0
 
 require (
-	github.com/go-rel/rel v0.41.0
+	github.com/go-rel/rel v0.42.0
 	github.com/go-rel/sql v0.16.0
 	github.com/mattn/go-sqlite3 v1.14.22
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 )
 
 require (

@@ -7,7 +7,7 @@ toolchain go1.21.0
 require (
 	github.com/go-rel/rel v0.43.0
 	github.com/go-rel/sql v0.17.0
-	github.com/mattn/go-sqlite3 v1.14.49
+	github.com/mattn/go-sqlite3 v1.14.50
 	github.com/stretchr/testify v1.12.1
 )
 
